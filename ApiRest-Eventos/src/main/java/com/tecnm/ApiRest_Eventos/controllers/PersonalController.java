@@ -1,12 +1,16 @@
 package com.tecnm.ApiRest_Eventos.controllers;
 
-import com.tecnm.ApiRest_Eventos.entities.Empleado;
-import com.tecnm.ApiRest_Eventos.services.PersonalService;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
+import com.tecnm.ApiRest_Eventos.entities.Empleado;
+import com.tecnm.ApiRest_Eventos.services.PersonalService;
 
 @RestController
 @RequestMapping("/api/personal")
@@ -15,7 +19,7 @@ public class PersonalController {
     @Autowired
     private PersonalService personalService;
 
-    @GetMapping
+    @GetMapping("/personal")
     public ResponseEntity<List<Empleado>> getAllPersonal() {
         return ResponseEntity.ok(personalService.findAll());
     }

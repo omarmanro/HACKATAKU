@@ -31,7 +31,7 @@ public class EventoService {
 	public Optional<Evento> updateEvento(UUID id, Evento evento) {
 		Optional<Evento> opEvento = eventoRepository.findById(id);
 		if (opEvento.isPresent()) {
-
+ 
 			Evento eventoActual = opEvento.get();
 			eventoActual.setSalon(evento.getSalon());
 			eventoActual.setEquipo(evento.getEquipo());
