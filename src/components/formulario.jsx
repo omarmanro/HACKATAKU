@@ -11,7 +11,7 @@ const getToday = () => {
   return `${yyyy}-${mm}-${dd}`;
 };
 
-const Formulario = ({ habilitado = false }) => {
+const Formulario = ({ habilitado = true }) => {
   const [employees] = useState([
     { id: 1, name: 'John Doe', position: 'Event Manager', avatar: '/avatars/john.jpg' },
     { id: 2, name: 'Jane Smith', position: 'Coordinator', avatar: '/avatars/jane.jpg' },

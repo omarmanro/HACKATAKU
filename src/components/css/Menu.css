@@ -1,15 +1,73 @@
+:root {
+  --primary-color: #096B68;
+  --primary-hover: #075451;
+  --secondary-color: #0A8582;
+  --accent-color: #0C9F9B;
+  --background-light: #F5F9F9;
+  --text-primary: #1A3C3B;
+  --text-secondary: #2E5453;
+}
+
 .menu {
   padding: 1rem;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  background: transparent;
 }
+
 .menu ul {
   list-style: none;
   margin: 0;
   padding: 0;
   display: flex;
   flex-direction: row;
-  gap: 1rem;
+  gap: 2rem;
+  align-items: center;
+  justify-content: center;
+  max-width: 1200px;
+  width: 100%;
 }
+
 .menu a {
   text-decoration: none;
-  color: inherit;    /* now inherits the nav’s color */
+  color: inherit;
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.menu a:hover {
+  background-color: rgba(9, 107, 104, 0.1);
+  color: var(--primary-color);
+}
+
+.menu a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: var(--primary-color);
+  transition: all 0.3s ease;
+  transform: translateX(-50%);
+}
+
+.menu a:hover::after {
+  width: 80%;
+}
+
+@media (max-width: 768px) {
+  .menu ul {
+    gap: 1rem;
+    padding: 0 1rem;
+  }
+  
+  .menu a {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.9rem;
+  }
 }

@@ -4,8 +4,12 @@ import Menu from './Menu'
 
 const TopBar = () => (
   <header className="topbar">
-    <h2>My App</h2>
-    <Menu textColor='#fff' />
+    <div className="topbar-content">
+      <div className="logo-container">
+        <h2>EnchulaEvento</h2>
+      </div>
+      <Menu textColor='#fff' />
+    </div>
   </header>
 )
 
