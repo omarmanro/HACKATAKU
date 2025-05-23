@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # React + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
@@ -14,3 +15,7 @@ If you are developing a production application, we recommend using TypeScript wi
 ## INSTALACIONES
 npm install react-router-dom
 npm install date-fns
+=======
+# HACKATAKU
+Lolololol
+>>>>>>> 3fc0a743df8bde74a968eba0e1a599ea3e50a833
