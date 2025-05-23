@@ -1,10 +1,10 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { Routes, Route } from 'react-router-dom';
 import './App.css'
 import TopBar from './components/TopBar'
-import Menu from './components/Menu'
-import ImageComponent from './components/ImageComponent'
+import Formulario from './components/formulario';
+import Home from './screens/Home';
+
 
 function App() {
   const [count, setCount] = useState(0)
@@ -12,9 +12,10 @@ function App() {
   return (
     <>
       <TopBar />
-      <main>
-        <ImageComponent src={reactLogo} alt="React logo" />
-      </main>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/formulario" element={<Formulario />} />
+      </Routes>
     </>
   )
 }

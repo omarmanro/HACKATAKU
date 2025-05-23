@@ -1,14 +1,16 @@
 import React from 'react'
 import './css/Menu.css'
+import { Link } from 'react-router-dom';
 
-const Menu = ({ textColor = '#333' }) => (
-  <nav className="menu" style={{ color: textColor }}>
-    <ul>
-      <li><a href="#">Home</a></li>
-      <li><a href="#">About</a></li>
-      <li><a href="#">Contact</a></li>
-    </ul>
-  </nav>
-)
+const Menu = () => {
+  return (
+    <nav className="menu">
+      <ul>
+        <li><Link to="/">Home</Link></li>
+        <li><Link to="/formulario">Formulario</Link></li>
+      </ul>
+    </nav>
+  );
+};
 
 export default Menu
