@@ -2,15 +2,9 @@
   display: grid;
   grid-template-areas:
   "a a a"
-<<<<<<< HEAD
-  "b c c"
-  "b c c";
-  height: 100dvh;
-=======
   "c c c"
   "c c c";
   height: 100vh;
->>>>>>> 3fc0a743df8bde74a968eba0e1a599ea3e50a833
   width: 100%;
   grid-template-columns: 1fr 4fr ;
   grid-template-rows: 1fr 9fr;

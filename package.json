@@ -10,10 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-<<<<<<< HEAD
     "date-fns": "^4.1.0",
-=======
->>>>>>> 3fc0a743df8bde74a968eba0e1a599ea3e50a833
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-router-dom": "^7.6.0"
