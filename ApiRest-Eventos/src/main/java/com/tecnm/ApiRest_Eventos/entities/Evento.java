@@ -3,6 +3,7 @@ package com.tecnm.ApiRest_Eventos.entities;
 import java.sql.Date;
 import java.util.UUID;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -14,22 +15,31 @@ import jakarta.persistence.Table;
 public class Evento {
 
 	@Id
-	private UUID uuid;
+	private UUID uuid = UUID.randomUUID();
+	@Column(name = "salon")
 	private int salon;
+	@Column(name = "equipo")
 	private int equipo;
+	@Column(name = "invitados")
 	private int invitados;//10%
 	private int cocineros; //5%
 	private int meseros; //5%	
+	@Column(name = "menu")
 	private int menu;
+	@Column(name = "fecha")
 	private Date fecha;
+	@Column(name = "decoracion")
 	private int decoracion;
+	@Column(name = "nombre_cliente")
 	private String nombreCliente;
+	@Column(name = "telefono")
 	private String telefono;
+	@Column(name = "correo")
 	private String correo;
+	@Column(name = "estado")
 	private String estado;
 
 	public Evento(int salon, int equipo, int invitados, int menu, Date fecha, int decoracion, String nombreCliente, String telefono, String correo, String estado) {
-		this.uuid = UUID.randomUUID();
 		this.salon = salon;
 		this.equipo = equipo;
 		this.invitados = invitados;
@@ -45,7 +55,9 @@ public class Evento {
 	}
 
 	public Evento() {
-
+		if (this.uuid == null) {
+            this.uuid = UUID.randomUUID();
+        }
 	}
 
 	public UUID getUuid() {
@@ -53,7 +65,12 @@ public class Evento {
 	}
 
 	public void setUuid(UUID uuid) {
-		this.uuid = uuid;
+		// Si el UUID es nulo, genera uno nuevo automáticamente
+		if (uuid == null) {
+			this.uuid = UUID.randomUUID();
+		} else {
+			this.uuid = uuid;
+		}
 	}
 
 	public int getSalon() {
@@ -86,7 +103,7 @@ public class Evento {
 	public int getCocineros() {
 		return cocineros;
 	}
-
+	
 	public void setCocineros(int cocineros) {
 		this.cocineros = cocineros;
 	}
