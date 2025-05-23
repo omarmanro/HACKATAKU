@@ -26,16 +26,16 @@ export default function EventScheduler() {
 
   return (
     <div className="p-6">
-      <h2 className="text-2xl font-bold mb-4">Event Scheduler</h2>
+      <h2 className="text-2xl font-bold mb-4">Calendario de eventos</h2>
 
       {/* Create Event Form */}
       <div className="bg-white shadow p-4 rounded mb-6">
-        <h3 className="text-lg font-semibold mb-2">Schedule a New Event</h3>
+        <h3 className="text-lg font-semibold mb-2">Organizacion de eventos</h3>
         <div className="flex flex-col gap-2 md:flex-row md:items-end">
           <input
             type="text"
             name="title"
-            placeholder="Event Title"
+            placeholder="Nombre del evento"
             value={newEvent.title}
             onChange={handleChange}
             className="border p-2 rounded w-full"
@@ -50,7 +50,7 @@ export default function EventScheduler() {
           <input
             type="text"
             name="location"
-            placeholder="Location"
+            placeholder="Salon"
             value={newEvent.location}
             onChange={handleChange}
             className="border p-2 rounded w-full"
@@ -59,7 +59,7 @@ export default function EventScheduler() {
             onClick={addEvent}
             className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
           >
-            Add Event
+            Agregar evento
           </button>
         </div>
       </div>

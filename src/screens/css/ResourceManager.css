@@ -1,0 +1,16 @@
+.resource-manager {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.resource-section {
+  margin-bottom: 2rem;
+}
+
+.resource-section h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #1e293b;
+  margin-bottom: 1rem;
+}
