@@ -1,42 +1,52 @@
 import { useState } from 'react'
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import './App.css'
 import TopBar from './components/TopBar'
-import FormularioEvento from './features/events/FormularioEvento'
-import Dashboard from './features/events/Dashboard'
-import ResourceManager from './screens/ResourceManager'
-import Home from './screens/Home'
 import Formulario from './components/formulario'
+import FormularioEventos from './features/events/FormularioEvento'
+import Home from './screens/Home'
+import Login from './components/Login'
+import Dashboard from './features/events/Dashboard'
 import Inventory from './features/events/Inventory'
 
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [isAdmin, setIsAdmin] = useState(() => {
+    // Persistencia local simple
+    return localStorage.getItem('isAdmin') === 'true';
+  });
+
+  const handleLogin = () => {
+    setIsAdmin(true);
+    localStorage.setItem('isAdmin', 'true');
+  };
+  const handleLogout = () => {
+    setIsAdmin(false);
+    localStorage.removeItem('isAdmin');
+  };
 
   return (
     <>
-      <TopBar />
+      <TopBar isAdmin={isAdmin} onLogout={handleLogout} />
       <main>
         <div className="content-container">
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/eventos" element={<FormularioEvento />} />
-            <Route path="/formulario" element={<Formulario formData2={{name: "joaquin", 
-            email: "joaquin@example.com", 
-            phone: "123456789", 
-            date: "2023-10-10", 
-            salon: "Salon elegante",
-            personas: 200,
-            comida: "Combo sencillo"
-          }} habilitado={false} />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/resources" element={<ResourceManager />} />
-            <Route path="/inventory" element={<Inventory />} />
+            {!isAdmin && <Route path="/formulario" element={<Formulario />} />}
+            {!isAdmin && <Route path="/admin" element={<Login onLogin={handleLogin} />} />}
+            {isAdmin && <Route path="/dashboard" element={<Dashboard />} />}
+            {isAdmin && <Route path="/inventory" element={<Inventory />} />}
+            {isAdmin && <Route path="/formularioEventos" element={<FormularioEventos />} />}
+            {/* Redirección para rutas no encontradas */}
+            {/* Redirección para rutas protegidas */}
+            {/* Si no es admin y va a dashboard/inventory, redirige a home */}
+            {!isAdmin && <Route path="/dashboard" element={<Navigate to="/" replace />} />}
+            {!isAdmin && <Route path="/inventory" element={<Navigate to="/" replace />} />}
           </Routes>
         </div>
       </main>
     </>
   );
-};
+}
 
 export default App;

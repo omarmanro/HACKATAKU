@@ -22,10 +22,11 @@
     padding: 2rem 2.5rem;
 }
 
-/* Asegura que label e input ocupen una columna */
+/* Asegura que label e input (excepto radio) ocupen una columna */
 .formulario label,
-.formulario input {
+.formulario input:not([type="radio"]) {
     width: 100%;
+    height: max-content;
 }
 
 /* Estilo para los inputs */
@@ -35,6 +36,27 @@
     padding: 0.5rem;
     border: 1px solid #ccc;
     border-radius: 4px;
+}
+
+/* Estilos específicos para radio buttons y sus etiquetas */
+.radio-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.radio-group label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: auto;
+}
+
+.radio-group input[type="radio"] {
+  width: auto;
+  height: auto;
+  padding: 0;
+  margin: 0;
 }
 
 /* Elementos que deben ocupar ambas columnas */

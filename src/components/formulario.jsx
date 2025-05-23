@@ -1,15 +1,14 @@
 import { useState } from "react";
 import "./css/Formulario.css";
 import DraggableList from "./DraggableList";
-import { FaUser, FaEnvelope, FaPhone, FaCalendarAlt, FaBuilding, FaMugHot } from 'react-icons/fa';
-import Logo from '../assets/logito.png';
+import { FaUser, FaEnvelope, FaPhone, FaBuilding, FaMugHot } from 'react-icons/fa';
 
 const getDateTimeLocal = () => {
   const now = new Date();
   return now.toISOString().slice(0, 16);
 };
 
-const Formulario = ({ habilitado = true }) => {
+const Formulario = ({ habilitado = true, initialData = {} }) => {
   const [employees] = useState([
     { id: 1, name: 'John Doe', position: 'Event Manager', avatar: '/avatars/john.jpg' },
     { id: 2, name: 'Jane Smith', position: 'Coordinator', avatar: '/avatars/jane.jpg' },
@@ -19,29 +18,44 @@ const Formulario = ({ habilitado = true }) => {
   const [events, setEvents] = useState([]);
   const [dropzoneEmployees, setDropzoneEmployees] = useState([]);
   const [formData, setFormData] = useState({
-    id: id,
-    name: formData2.name || "",
-    email: formData2.email || "",
-    phone: formData2.phone || "",
-    dateTime: formData2.dateTime || getDateTimeLocal(),
-    salon: formData2.salon || "Salon playa",
-    personas: formData2.personas || 100,
-    comida: formData2.comida || "Combo sencillo",
+    name: initialData.name || "",
+    email: initialData.email || "",
+    phone: initialData.phone || "",
+    dateTime: initialData.dateTime || getDateTimeLocal(),
+    salon: initialData.salon || 1,
+    personas: initialData.personas || 100,
+    comida: initialData.comida || 1,
+    equipo: initialData.equipo || 1,
+    decoracion: initialData.decoracion || 1,
   });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    // Convertir a número si el campo es personas, salon o comida
+    const numericFields = ["personas", "salon", "comida", "equipo", "decoracion"];
+    setFormData((prev) => ({
+      ...prev,
+      [name]: numericFields.includes(name) ? Number(value) : value
+    }));
   };
 
   // URL de la API (usar variable de entorno VITE_API_URL o fallback)
-  const API_URL = import.meta.env.VITE_API_URL || 'http://192.168.252.218:8080/api/formulario';
+  const API_URL = import.meta.env.VITE_API_URL || 'http://192.168.252.218:8080/api/eventos';
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    // Formatear fecha solo con día si es necesario
     const fullData = {
-      ...formData,
-      empleadosSeleccionados: dropzoneEmployees
+      salon: formData.salon,
+      equipo: formData.equipo,
+      invitados: formData.personas,
+      menu: formData.comida,
+      fecha: formData.dateTime, // o usa formData.dateTime si necesitas fecha y hora
+      decoracion: formData.decoracion,
+      nombreCliente: formData.name,
+      telefono: formData.phone,
+      correo: formData.email,
+      estado: "espera",
     };
     try {
       const response = await fetch(API_URL, {
@@ -138,10 +152,10 @@ const Formulario = ({ habilitado = true }) => {
                 type="radio"
                 id="personas1"
                 name="personas"
-                value="100"
+                value={100}
                 required
                 disabled={habilitado}
-                checked={formData.salon === "100"}
+                checked={formData.personas === 100}
                 onChange={handleChange}
               />
               100
@@ -151,9 +165,9 @@ const Formulario = ({ habilitado = true }) => {
                 type="radio"
                 id="personas2"
                 name="personas"
-                value="200"
+                value={200}
                 disabled={habilitado}
-                checked={formData.salon === "200"}
+                checked={formData.personas === 200}
                 onChange={handleChange}
               />
               200
@@ -163,9 +177,9 @@ const Formulario = ({ habilitado = true }) => {
                 type="radio"
                 id="personas3"
                 name="personas"
-                value="300"
+                value={300}
                 disabled={habilitado}
-                checked={formData.salon === "300"}
+                checked={formData.personas === 300}
                 onChange={handleChange}
               />
               300
@@ -183,10 +197,10 @@ const Formulario = ({ habilitado = true }) => {
                 type="radio"
                 id="comida1"
                 name="comida"
-                value="Combo sencillo"
+                value={1}
                 required
                 disabled={habilitado}
-                checked={formData.salon === "Combo sencillo"}
+                checked={formData.comida === 1}
                 onChange={handleChange}
               />
               Combo Sencillo
@@ -196,9 +210,9 @@ const Formulario = ({ habilitado = true }) => {
                 type="radio"
                 id="comida2"
                 name="comida"
-                value="Combo completo"
+                value={2}
                 disabled={habilitado}
-                checked={formData.salon === "Combo completo"}
+                checked={formData.comida === 2}
                 onChange={handleChange}
               />
               Combo Completo
@@ -208,9 +222,9 @@ const Formulario = ({ habilitado = true }) => {
                 type="radio"
                 id="comida3"
                 name="comida"
-                value="Combo premium"
+                value={3}
                 disabled={habilitado}
-                checked={formData.salon === "Combo premium"}
+                checked={formData.comida === 3 }
                 onChange={handleChange}
               />
               Combo Premium
@@ -228,10 +242,10 @@ const Formulario = ({ habilitado = true }) => {
                 type="radio"
                 id="salon1"
                 name="salon"
-                value="Salon playa"
+                value={1}
                 required
                 disabled={habilitado}
-                checked={formData.salon === "Salon playa"}
+                checked={formData.salon === 1}
                 onChange={handleChange}
               />
               Salón Playa
@@ -241,9 +255,9 @@ const Formulario = ({ habilitado = true }) => {
                 type="radio"
                 id="salon2"
                 name="salon"
-                value="Salon elegante"
+                value={2}
                 disabled={habilitado}
-                checked={formData.salon === "Salon elegante"}
+                checked={formData.salon === 2}
                 onChange={handleChange}
               />
               Salón Elegante
@@ -253,9 +267,9 @@ const Formulario = ({ habilitado = true }) => {
                 type="radio"
                 id="salon3"
                 name="salon"
-                value="Salon infantil"
+                value={3}
                 disabled={habilitado}
-                checked={formData.salon === "Salon infantil"}
+                checked={formData.salon === 3}
                 onChange={handleChange}
               />
               Salón Infantil
@@ -263,7 +277,104 @@ const Formulario = ({ habilitado = true }) => {
           </div>
         </div>
 
-        
+        <div className="form-group">
+          <label>Equipo</label>
+          <div className="radio-group">
+            <label htmlFor="equipo1">
+              <input
+                type="radio"
+                id="equipo1"
+                name="equipo"
+                value={1}
+                required
+                disabled={habilitado}
+                checked={formData.equipo === 1}
+                onChange={handleChange}
+              />
+              Equipo Básico
+            </label>
+            <label htmlFor="equipo2">
+              <input
+                type="radio"
+                id="equipo2"
+                name="equipo"
+                value={2}
+                disabled={habilitado}
+                checked={formData.equipo === 2}
+                onChange={handleChange}
+              />
+              Equipo Plus
+            </label>
+            <label htmlFor="equipo3">
+              <input
+                type="radio"
+                id="equipo3"
+                name="equipo"
+                value={3}
+                disabled={habilitado}
+                checked={formData.equipo === 3}
+                onChange={handleChange}
+              />
+              Equipo Plus Max
+            </label>
+          </div>
+        </div>
+
+        <div className="form-group">
+          <label>Decoración</label>
+          <div className="radio-group">
+            <label htmlFor="decoracion1">
+              <input
+                type="radio"
+                id="decoracion1"
+                name="decoracion"
+                value={1}
+                required
+                disabled={habilitado}
+                checked={formData.decoracion === 1}
+                onChange={handleChange}
+              />
+              Decoración Clásica
+            </label>
+            <label htmlFor="decoracion2">
+              <input
+                type="radio"
+                id="decoracion2"
+                name="decoracion"
+                value={2}
+                disabled={habilitado}
+                checked={formData.decoracion === 2}
+                onChange={handleChange}
+              />
+              Decoración Moderna
+            </label>
+            <label htmlFor="decoracion3">
+              <input
+                type="radio"
+                id="decoracion3"
+                name="decoracion"
+                value={3}
+                disabled={habilitado}
+                checked={formData.decoracion === 3}
+                onChange={handleChange}
+              />
+              Decoración Infantil
+            </label>
+            <label htmlFor="decoracion4">
+              <input
+                type="radio"
+                id="decoracion4"
+                name="decoracion"
+                value={4}
+                disabled={habilitado}
+                checked={formData.decoracion === 4}
+                onChange={handleChange}
+              />
+              Decoración Romántica
+            </label>
+          </div>
+        </div>
+
         {habilitado && (
           <div className="form-group" style={{ gridColumn: '1 / -1' }}>
             <label>Seleccionar Personal</label>
@@ -274,17 +385,6 @@ const Formulario = ({ habilitado = true }) => {
               onDropzoneChange={setDropzoneEmployees}
             />
           </div>
-        )}
-        {
-          habilitado && (
-          <div className="form-field">
-          <DraggableList
-            items={equipment}
-            type="equipment"
-            onItemsChange={(items) => setEvents(items)}
-            onDropzoneChange={setDropzoneEquipment}
-          />
-          </div>  
         )}
         
         <button type="submit" >Submit</button>
