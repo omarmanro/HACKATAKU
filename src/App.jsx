@@ -7,7 +7,7 @@ import Dashboard from './features/events/Dashboard'
 import ResourceManager from './screens/ResourceManager'
 import Home from './screens/Home'
 import Formulario from './components/formulario'
-import Inventory from './screens/Inventory'
+import Inventory from './features/events/Inventory'
 
 
 function App() {

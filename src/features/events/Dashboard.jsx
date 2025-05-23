@@ -36,6 +36,10 @@ export default function Dashboard() {
     totalEvents: 0,
     avgEventValue: 0,
     customerSatisfaction: 0,
+    employeePerformance: {
+      average: 0,
+      topPerformers: []
+    },
     upcomingEvents: [],
     monthlyData: [],
     resourceUtilization: [],
@@ -50,6 +54,14 @@ export default function Dashboard() {
       totalEvents: 48,
       avgEventValue: 2604,
       customerSatisfaction: 4.8,
+      employeePerformance: {
+        average: 92,
+        topPerformers: [
+          { id: 1, name: "John Doe", performance: 98, eventsManaged: 15, satisfaction: 4.9 },
+          { id: 2, name: "Jane Smith", performance: 95, eventsManaged: 12, satisfaction: 4.8 },
+          { id: 3, name: "Mike Johnson", performance: 94, eventsManaged: 10, satisfaction: 4.7 }
+        ]
+      },
       upcomingEvents: [
         { id: 1, name: 'Corporate Conference', date: '2025-05-25', time: '09:00', location: 'Grand Ballroom', attendees: 150 },
         { id: 2, name: 'Wedding Reception', date: '2025-05-27', time: '18:00', location: 'Garden Terrace', attendees: 200 },
@@ -193,6 +205,19 @@ export default function Dashboard() {
             <p className="card-trend positive">↑ 5.2% vs last period</p>
           </div>
         </div>
+
+        <div className="card">
+          <div className="card-icon">
+            <FaChartLine />
+          </div>
+          <div className="card-content">
+            <h3 className="card-title">Team Performance</h3>
+            <p className="card-value blue">
+              {metrics.employeePerformance.average}%
+            </p>
+            <p className="card-trend positive">↑ 3.5% vs last period</p>
+          </div>
+        </div>
       </div>
 
       <div className="dashboard-grid">
@@ -288,6 +313,40 @@ export default function Dashboard() {
               ))}
             </tbody>
           </table>
+        </div>
+      </div>
+
+      {/* Employee Performance Section */}
+      <div className="employee-performance">
+        <h2 className="section-title">Top Performing Team Members</h2>
+        <div className="performance-grid">
+          {metrics.employeePerformance.topPerformers.map((employee) => (
+            <div key={employee.id} className="performance-card">
+              <div className="performance-header">
+                <h3>{employee.name}</h3>
+                <div className="performance-score">
+                  <span className="score">{employee.performance}%</span>
+                  <span className="label">Performance</span>
+                </div>
+              </div>
+              <div className="performance-stats">
+                <div className="stat">
+                  <span className="label">Events Managed</span>
+                  <span className="value">{employee.eventsManaged}</span>
+                </div>
+                <div className="stat">
+                  <span className="label">Satisfaction</span>
+                  <span className="value">{employee.satisfaction}/5.0</span>
+                </div>
+              </div>
+              <div className="performance-bar">
+                <div 
+                  className="performance-fill" 
+                  style={{ width: `${employee.performance}%` }}
+                />
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </div>

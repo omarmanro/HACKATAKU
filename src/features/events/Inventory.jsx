@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { FaChair, FaTable, FaLeaf, FaWineGlass, FaMusic, FaLightbulb } from 'react-icons/fa';
-import './css/Inventory.css';
+import '../../components/css/Inventory.css';
 
 const Inventory = () => {
   const [inventory, setInventory] = useState({
