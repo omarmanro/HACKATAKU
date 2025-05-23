@@ -2,11 +2,13 @@ package com.tecnm.ApiRest_Eventos.entities;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Table(name = "personal")
 @Entity
 public class Empleado {
+	@Id
 	private int id;
     @Column(length = 50)
 	private String nombre;

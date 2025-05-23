@@ -15,7 +15,6 @@ import jakarta.persistence.Table;
 public class Evento {
 		@Id
 		private UUID uuid;
-	    private UUID cliente_id;
 	    private int salon;
 	    @Column(length = 50)
 	    private String equipo;
@@ -25,12 +24,11 @@ public class Evento {
 	    private int menu;
 	    private Date fecha;
 	    private int decoracion;
+	    private UUID cliente_id;
 	    private String estado;
-	        		
-	    public Evento(UUID uuid, UUID cliente_id, int salon, String equipo, int invitados,int menu, Date fecha, int decoracion, String estado) {
-			super();
+
+	    public Evento(UUID uuid, int salon, String equipo, int invitados,int menu, Date fecha, int decoracion,UUID cliente_id, String estado) {
 			this.uuid = uuid;
-			this.cliente_id = cliente_id;
 			this.salon = salon;
 			this.equipo = equipo;
 			this.invitados = invitados;
@@ -39,6 +37,7 @@ public class Evento {
 			this.menu = menu;
 			this.fecha = fecha;
 			this.decoracion = decoracion;
+			this.cliente_id = cliente_id;
 			this.estado = estado;
 		}
 
