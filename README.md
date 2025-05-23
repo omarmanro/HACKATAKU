@@ -1,2 +1,0 @@
-# HACKATAKU
-Lolololol
