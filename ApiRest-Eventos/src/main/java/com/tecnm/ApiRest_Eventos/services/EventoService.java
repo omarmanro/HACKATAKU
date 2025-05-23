@@ -22,8 +22,8 @@ public class EventoService {
 	public List<Evento> findAll() {
 		return eventoRepository.findAll();
 	}
-	public List<Evento> findByClienteUuid(UUID uuid) {
-		return eventoRepository.findByClienteUuid(uuid);
+	public Evento findByClienteUuid(UUID uuid) {
+		return eventoRepository.findByClienteUuid(uuid).get();
 	}
 	public List<Evento> findBySalon(int salon) {
 		return eventoRepository.findBySalon(salon);
@@ -56,6 +56,9 @@ public class EventoService {
 	}
 	public void deleteEvento(UUID id) {
 		eventoRepository.deleteById(id);
+	}
+	public Evento createEvento(Evento evento) {
+		return eventoRepository.save(evento);
 	}
 
 
