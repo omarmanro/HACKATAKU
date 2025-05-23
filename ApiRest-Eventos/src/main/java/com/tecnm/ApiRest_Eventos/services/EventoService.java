@@ -14,16 +14,10 @@ import com.tecnm.ApiRest_Eventos.repositories.EventoRepository;
 @Service
 public class EventoService {
 	@Autowired
-	private final EventoRepository eventoRepository;
+	private EventoRepository eventoRepository;
 	
-	public EventoService(EventoRepository eventoRepository) {
-		this.eventoRepository = eventoRepository;
-	}
 	public List<Evento> findAll() {
 		return eventoRepository.findAll();
-	}
-	public Evento findByClienteUuid(UUID uuid) {
-		return eventoRepository.findById(uuid).get();
 	}
 	public List<Evento> findBySalon(int salon) {
 		return eventoRepository.findBySalon(salon);
@@ -48,6 +42,10 @@ public class EventoService {
 			eventoActual.setFecha(evento.getFecha());
 			eventoActual.setDecoracion(evento.getDecoracion());
 			eventoActual.setEstado(evento.getEstado());
+			// Nuevos campos
+			eventoActual.setNombreCliente(evento.getNombreCliente());
+			eventoActual.setTelefono(evento.getTelefono());
+			eventoActual.setCorreo(evento.getCorreo());
 
 
 			eventoRepository.save(eventoActual);

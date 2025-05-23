@@ -1,14 +1,23 @@
 package com.tecnm.ApiRest_Eventos.controllers;
 
 import java.sql.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.tecnm.ApiRest_Eventos.entities.Evento;
 import com.tecnm.ApiRest_Eventos.services.EventoService;
@@ -35,11 +44,6 @@ public class EventController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @GetMapping("/cliente/{uuid}")
-    public ResponseEntity<Evento> getEventosByCliente(@PathVariable("uuid") UUID uuid) {
-        return ResponseEntity.ok(eventoService.findByClienteUuid(uuid));
-    }
-
     @GetMapping("/salon/{salon}")
     public ResponseEntity<List<Evento>> getEventosBySalon(@PathVariable("salon") int salon) {
         return ResponseEntity.ok(eventoService.findBySalon(salon));
@@ -56,9 +60,18 @@ public class EventController {
     }
 
     @PostMapping
-    public ResponseEntity<Evento> postEvento(@RequestBody Evento evento) {
-        Evento nuevoEvento = eventoService.createEvento(evento);
-        return ResponseEntity.status(HttpStatus.CREATED).body(nuevoEvento);
+    public ResponseEntity<Map<String, String>> createEvento(@RequestBody Evento evento) {
+        Map<String, String> response = new HashMap<>();
+        try {
+            eventoService.createEvento(evento);
+            response.put("status", "success");
+            response.put("message", "Evento recibido e insertado correctamente.");
+            return ResponseEntity.status(HttpStatus.OK).body(response);
+        } catch (Exception e) {
+            response.put("status", "error");
+            response.put("message", "Hubo un problema al procesar el evento: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+        }
     }
 
     @PutMapping("/{idEvento}")
