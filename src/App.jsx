@@ -3,11 +3,10 @@ import { Routes, Route } from 'react-router-dom';
 import './App.css'
 import TopBar from './components/TopBar'
 import FormularioEvento from './features/events/FormularioEvento'
-import reactLogo from './assets/react.svg'
 import Dashboard from './features/events/Dashboard'
 import ResourceManager from './screens/ResourceManager'
 import Home from './screens/Home'
-import Formulario from './components/Formulario'
+import Formulario from './components/formulario'
 import Inventory from './screens/Inventory'
 
 

@@ -3,21 +3,21 @@
   justify-content: center;
   align-items: center;
   min-height: 50vh;
-  width: 100vw;
-  background: transparent;
+  width: 85vw;
     grid-area: c;
 }
 
 .formulario {
+    color: black; 
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 1rem;
+    gap: 2rem;
      width: 100%;
      max-width: 800px;
      height: auto;
      margin: 0 auto;
-     box-shadow: 0 2px 16px rgba(0,0,0,0.08);
-     background: #222;
+     box-shadow: 0 2px 16px rgba(154, 245, 112, 0.08);
+     background: #096b683a;
      border-radius: 12px;
     padding: 2rem 2.5rem;
 }
@@ -26,6 +26,15 @@
 .formulario label,
 .formulario input {
     width: 100%;
+}
+
+/* Estilo para los inputs */
+.formulario input {
+    background: #fff;
+    color: #333;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
 }
 
 /* Elementos que deben ocupar ambas columnas */

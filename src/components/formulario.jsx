@@ -40,7 +40,8 @@ const Formulario = ({formData2 ={}, habilitado = false, id=-1}) => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    const newValue = name === 'personas' ? parseInt(value, 10) : value;
+    setFormData((prev) => ({ ...prev, [name]: newValue }));
   };
 
   const handleSubmit = (e) => {
