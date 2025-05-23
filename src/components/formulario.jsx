@@ -4,12 +4,9 @@ import DraggableList from "./DraggableList";
 import { FaUser, FaEnvelope, FaPhone, FaCalendarAlt, FaBuilding, FaMugHot } from 'react-icons/fa';
 import Logo from '../assets/logito.png';
 
-const getToday = () => {
-  const today = new Date();
-  const yyyy = today.getFullYear();
-  const mm = String(today.getMonth() + 1).padStart(2, '0');
-  const dd = String(today.getDate()).padStart(2, '0');
-  return `${yyyy}-${mm}-${dd}`;
+const getDateTimeLocal = () => {
+  const now = new Date();
+  return now.toISOString().slice(0, 16);
 };
 
 const Formulario = ({ habilitado = true }) => {
@@ -22,11 +19,14 @@ const Formulario = ({ habilitado = true }) => {
   const [events, setEvents] = useState([]);
   const [dropzoneEmployees, setDropzoneEmployees] = useState([]);
   const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    date: getToday(),
-    salon: "Salon playa"
+    id: id,
+    name: formData2.name || "",
+    email: formData2.email || "",
+    phone: formData2.phone || "",
+    dateTime: formData2.dateTime || getDateTimeLocal(),
+    salon: formData2.salon || "Salon playa",
+    personas: formData2.personas || 100,
+    comida: formData2.comida || "Combo sencillo",
   });
 
   const handleChange = (e) => {
@@ -34,16 +34,30 @@ const Formulario = ({ habilitado = true }) => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  // URL de la API (usar variable de entorno VITE_API_URL o fallback)
+  const API_URL = import.meta.env.VITE_API_URL || 'http://192.168.252.218:8080/api/formulario';
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const fullData = {
       ...formData,
       empleadosSeleccionados: dropzoneEmployees
     };
-    localStorage.setItem("formularioData", JSON.stringify(fullData));
-    alert("Datos guardados exitosamente");
+    try {
+      const response = await fetch(API_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(fullData)
+      });
+      const result = await response.json();
+      if (!response.ok) throw new Error(result.message || 'Error al enviar datos');
+      alert('Formulario enviado con éxito.\n' + JSON.stringify(result, null, 2));
+    } catch (err) {
+      console.error('Error al enviar formulario:', err);
+      alert('Ocurrió un error al enviar los datos: ' + err.message);
+    }
   };
-
+  
   return (
     <div className="formulario-container">
       <form className="formulario" onSubmit={handleSubmit}>
@@ -100,18 +114,16 @@ const Formulario = ({ habilitado = true }) => {
           />
         </div>
         
-        <div className="form-group">
-          <label htmlFor="date">
-            <FaCalendarAlt /> Fecha del Evento
-          </label>
+        <div className="form-field">
+          <label htmlFor="dateTime">Fecha y hora:</label>
           <input
-            type="date"
-            id="date"
-            name="date"
+            type="datetime-local"
+            id="dateTime"
+            name="dateTime"
             required
             disabled={habilitado}
-            value={formData.date}
-            min={getToday()}
+            value={formData.dateTime}
+            min={getDateTimeLocal()}
             onChange={handleChange}
           />
         </div>
@@ -263,23 +275,19 @@ const Formulario = ({ habilitado = true }) => {
             />
           </div>
         )}
-        {habilitado && (
-          <div className="form-group">
-            <DraggableList
-              items={equipment}
-              type="equipment"
-              onItemsChange={(items) => setEvents(items)}
-              onDropzoneChange={setDropzoneEmployees}
-            />
-          </div>)}
-          <div className="form-group">
-            <img src="../src/assets/logito.png" alt="Imagen de ejemplo" />
-          </div>
-
-
-        <button type="submit" disabled={habilitado && dropzoneEmployees.length === 0}>
-          Registrar Evento
-        </button>
+        {
+          habilitado && (
+          <div className="form-field">
+          <DraggableList
+            items={equipment}
+            type="equipment"
+            onItemsChange={(items) => setEvents(items)}
+            onDropzoneChange={setDropzoneEquipment}
+          />
+          </div>  
+        )}
+        
+        <button type="submit" >Submit</button>
       </form>
     </div>
   );
