@@ -1,7 +1,6 @@
 package com.tecnm.ApiRest_Eventos.entities;
 
 import java.util.UUID;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -12,7 +11,7 @@ public class Person {
 	@Id
 	private UUID uuid;
 	private String nombreCliente;
-	private int numero;
+	private Integer numero;
 	
 	public Person(UUID uuid, String nombreCliente, int numero) {
 		this.uuid = uuid;

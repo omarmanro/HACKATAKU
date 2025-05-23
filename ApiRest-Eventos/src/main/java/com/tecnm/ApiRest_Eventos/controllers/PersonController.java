@@ -30,14 +30,14 @@ public class PersonController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @GetMapping("/nombre/{nombreCliente}")
-    public ResponseEntity<List<Person>> getByNombreCliente(@PathVariable("nombreCliente") String nombreCliente) {
-        return ResponseEntity.ok(personService.findByNombreCliente(nombreCliente));
-    }
-
-    @GetMapping("/numero/{numero}")
-    public ResponseEntity<List<Person>> getByNumero(@PathVariable("numero") int numero) {
-        return ResponseEntity.ok(personService.findByNumero(numero));
+    @GetMapping("/buscar")
+    public ResponseEntity<List<Person>> buscarPersonas(@RequestParam(required = false) String nombreCliente, @RequestParam(required = false) Integer numero) {
+        if (nombreCliente != null) {
+            return ResponseEntity.ok(personService.findAllByNombreCliente(nombreCliente));
+        } else if (numero != null) {
+            return ResponseEntity.ok(personService.findAllByNumero(numero));
+        }
+        return ResponseEntity.badRequest().build();
     }
 
     @PostMapping

@@ -8,14 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.tecnm.ApiRest_Eventos.entities.Person;
-import com.tecnm.ApiRest_Eventos.repositories.PersonRepostory;
+import com.tecnm.ApiRest_Eventos.repositories.PersonRepository;
 
 @Service
 public class PersonService  {
 	@Autowired 
-	private final PersonRepostory repository;
+	private final PersonRepository repository;
 
-	public PersonService(PersonRepostory repository) {
+	public PersonService(PersonRepository repository) {
 		this.repository = repository;
 	}
 	public Iterable<Person> getAllPersons() {
@@ -48,11 +48,21 @@ public class PersonService  {
 		repository.deleteById(id);
 	}
 	
-	public List<Person> findByNombreCliente(String nombreCliente) {
+	public Optional<Person> findByNombreCliente(String nombreCliente) {
+		List<Person> result = repository.findByNombreCliente(nombreCliente);
+		return result.isEmpty() ? Optional.empty() : Optional.of(result.get(0));
+	}
+
+	public List<Person> findAllByNombreCliente(String nombreCliente) {
 		return repository.findByNombreCliente(nombreCliente);
 	}
 
-	public List<Person> findByNumero(int numero) {
+	public Optional<Person> findByNumero(int numero) {
+		List<Person> result = repository.findByNumero(numero);
+		return result.isEmpty() ? Optional.empty() : Optional.of(result.get(0));
+	}
+
+	public List<Person> findAllByNumero(int numero) {
 		return repository.findByNumero(numero);
 	}
 }
