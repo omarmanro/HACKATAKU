@@ -1,24 +1,29 @@
 package com.tecnm.ApiRest_Eventos.entities;
 
 import java.util.UUID;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "cliente")
-public class Person {
-	@Id
-	private UUID uuid;
+
+public class Client {
+
+    @Id
+    @Column(columnDefinition = "BINARY(16)")
+    private UUID uuid;
 	private String nombreCliente;
-	private Integer numero;
+	private int numero;
 	
-	public Person(UUID uuid, String nombreCliente, int numero) {
+	public Client(UUID uuid, String nombreCliente, int numero) {
 		this.uuid = uuid;
 		this.nombreCliente = nombreCliente;
 		this.numero = numero;
 	}
-	public Person() {
+	public Client() {
 		
 	}
 	public UUID getUuid() {

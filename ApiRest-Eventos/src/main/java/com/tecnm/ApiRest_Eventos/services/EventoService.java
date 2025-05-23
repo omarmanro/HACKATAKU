@@ -23,7 +23,7 @@ public class EventoService {
 		return eventoRepository.findAll();
 	}
 	public Evento findByClienteUuid(UUID uuid) {
-		return eventoRepository.findByClienteUuid(uuid).get();
+		return eventoRepository.findById(uuid).get();
 	}
 	public List<Evento> findBySalon(int salon) {
 		return eventoRepository.findBySalon(salon);
@@ -42,10 +42,13 @@ public class EventoService {
 			eventoActual.setSalon(evento.getSalon());
 			eventoActual.setEquipo(evento.getEquipo());
 			eventoActual.setInvitados(evento.getInvitados());
+			eventoActual.setCocineros((evento.getInvitados() / 100) * 5); // recalculado
+			eventoActual.setMeseros((evento.getInvitados() / 100) * 5);   // recalculado
 			eventoActual.setMenu(evento.getMenu());
 			eventoActual.setFecha(evento.getFecha());
 			eventoActual.setDecoracion(evento.getDecoracion());
-			eventoActual.setDecoracion(evento.getDecoracion());
+			eventoActual.setEstado(evento.getEstado());
+
 
 			eventoRepository.save(eventoActual);
 			return Optional.of(eventoActual);

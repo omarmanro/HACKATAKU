@@ -5,6 +5,8 @@ import java.util.UUID;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
@@ -13,141 +15,138 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "evento")
 public class Evento {
-		@Id
-		private UUID uuid;
-	    private int salon;
-	    @Column(length = 50)
-	    private String equipo;
-	    private int invitados;//10%
-	    private int cocineros; //5%
-	    private int meseros; //5%	
-	    private int menu;
-	    private Date fecha;
-	    private int decoracion;
-	    private UUID cliente_id;
-	    private String estado;
 
-	    public Evento(UUID uuid, int salon, String equipo, int invitados,int menu, Date fecha, int decoracion,UUID cliente_id, String estado) {
-			this.uuid = uuid;
-			this.salon = salon;
-			this.equipo = equipo;
-			this.invitados = invitados;
-			this.cocineros = (invitados/100)*5;
-			this.meseros = (invitados/100)*5;
-			this.menu = menu;
-			this.fecha = fecha;
-			this.decoracion = decoracion;
-			this.cliente_id = cliente_id;
-			this.estado = estado;
-		}
+	@Id
+	private UUID uuid;
+	private int salon;
+	@Column(length = 50)
+	private String equipo;
+	private int invitados;//10%
+	private int cocineros; //5%
+	private int meseros; //5%	
+	private int menu;
+	private Date fecha;
+	private int decoracion;
 
-		public Evento() {
-	    	
-	    }
-		
-		public UUID getUuid() {
-			return uuid;
-		}
+	@Column(name = "cliente_id", columnDefinition = "BINARY(16)")
+	private UUID clienteId;
 
-		public void setUuid(UUID uuid) {
-			this.uuid = uuid;
-		}
+	private String estado;
 
-		public UUID getCliente_id() {
-			return cliente_id;
-		}
+	public Evento(UUID uuid, int salon, String equipo, int invitados,int menu, Date fecha, int decoracion,UUID clienteId, String estado) {
+		this.uuid = uuid;
+		this.salon = salon;
+		this.equipo = equipo;
+		this.invitados = invitados;
+		this.cocineros = Math.max(1, (int) Math.ceil(invitados * 0.05));
+		this.meseros = Math.max(1, (int) Math.ceil(invitados * 0.05));
+		this.menu = menu;
+		this.fecha = fecha;
+		this.decoracion = decoracion;
+		this.clienteId = clienteId;
+		this.estado = estado;
+	}
 
-		public void setCliente_id(UUID cliente_id) {
-			this.cliente_id = cliente_id;
-		}
+	public Evento() {
 
-		public int getSalon() {
-			return salon;
-		}
+	}
 
-		public void setSalon(int salon) {
-			this.salon = salon;
-		}
+	public UUID getUuid() {
+		return uuid;
+	}
 
-		public String getEquipo() {
-			return equipo;
-		}
+	public void setUuid(UUID uuid) {
+		this.uuid = uuid;
+	}
 
-		public void setEquipo(String equipo) {
-			this.equipo = equipo;
-		}
+	public UUID getCliente_id() {
+		return clienteId;
+	}
 
-		public int getInvitados() {
-			return invitados;
-		}
+	public void setCliente_id(UUID cliente_id) {
+		this.clienteId = cliente_id;
+	}
 
-		public void setInvitados(int invitados) {
-			this.invitados = invitados;
-		}
+	public int getSalon() {
+		return salon;
+	}
 
-		public int getCocineros() {
-			return cocineros;
-		}
+	public void setSalon(int salon) {
+		this.salon = salon;
+	}
 
-		public void setCocineros(int cocineros) {
-			this.cocineros = cocineros;
-		}
+	public String getEquipo() {
+		return equipo;
+	}
 
-		public int getMeseros() {
-			return meseros;
-		}
+	public void setEquipo(String equipo) {
+		this.equipo = equipo;
+	}
 
-		public void setMeseros(int meseros) {
-			this.meseros = meseros;
-		}
+	public int getInvitados() {
+		return invitados;
+	}
 
-		public int getMenu() {
-			return menu;
-		}
+	public void setInvitados(int invitados) {
+		this.invitados = invitados;
+		this.cocineros = Math.max(1, (int) Math.ceil(invitados * 0.05));
+		this.meseros = Math.max(1, (int) Math.ceil(invitados * 0.05));
 
-		public void setMenu(int menu) {
-			this.menu = menu;
-		}
+	}
 
-		public Date getFecha() {
-			return fecha;
-		}
+	public int getCocineros() {
+		return cocineros;
+	}
 
-		public void setFecha(Date fecha) {
-			this.fecha = fecha;
-		}
+	public void setCocineros(int cocineros) {
+		this.cocineros = cocineros;
+	}
 
-		public int getDecoracion() {
-			return decoracion;
-		}
+	public int getMeseros() {
+		return meseros;
+	}
 
-		public void setDecoracion(int decoracion) {
-			this.decoracion = decoracion;
-		}
+	public void setMeseros(int meseros) {
+		this.meseros = meseros;
+	}
 
-		public String getEstado() {
-			return estado;
-		}
+	public int getMenu() {
+		return menu;
+	}
 
-		public void setEstado(String estado) {
-			this.estado = estado;
-		}
+	public void setMenu(int menu) {
+		this.menu = menu;
+	}
 
-		@Override
-		//Json format
-		public String toString() {
-			return "{uuid:" + uuid + 
-					", cliente_id:" + cliente_id + 
-					", salon:" + salon + 
-					", equipo:" + equipo + 
-					", invitados:" + invitados + 
-					", menu:" + menu + 
-					", cocineros:" + cocineros + 
-					", meseros:" + meseros +
-					", fecha:" + fecha +
-					", decoracion:" + decoracion +
-					", estado:" + estado + "}";
-			
-		}
+	public Date getFecha() {
+		return fecha;
+	}
+
+	public void setFecha(Date fecha) {
+		this.fecha = fecha;
+	}
+
+	public int getDecoracion() {
+		return decoracion;
+	}
+
+	public void setDecoracion(int decoracion) {
+		this.decoracion = decoracion;
+	}
+
+	public String getEstado() {
+		return estado;
+	}
+
+	public void setEstado(String estado) {
+		this.estado = estado;
+	}
+
+	@Override
+
+	public String toString() {
+		return String.format("{\"uuid\":\"%s\", \"cliente_id\":\"%s\", \"salon\":%d, \"equipo\":\"%s\", \"invitados\":%d, \"menu\":%d, \"cocineros\":%d, \"meseros\":%d, \"fecha\":\"%s\", \"decoracion\":%d, \"estado\":\"%s\"}",
+				uuid, clienteId, salon, equipo, invitados, menu, cocineros, meseros, fecha, decoracion, estado);
+	}
 
 }
